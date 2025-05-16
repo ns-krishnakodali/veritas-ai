@@ -1,5 +1,7 @@
 "use client";
 
+import "./veritas.css";
+
 import { useState } from "react";
 
 import { Conversation } from "../../components";
@@ -26,17 +28,19 @@ export const VeritasPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center text-center py-10">
-      <h1 className="text-4xl text-primary font-bold ">Veritas AI</h1>
+    <div className="flex flex-col items-center justify-center text-center py-10 appear">
+      <h1 className="text-4xl text-primary font-bold cursor-default">
+        Veritas AI
+      </h1>
       {chats.length === 0 ? (
-        <div className="flex flex-col items-center justify-center mt-4">
+        <div className="flex flex-col items-center justify-center mt-8">
           <img
             src="assets/waving-hand.svg"
             alt="Waving Hand"
             width={90}
             height={90}
           />
-          <p className="w-2/3 mt-2 text-lg text-primary-light">
+          <p className="w-2/3 mt-2 text-lg font-semibold text-primary-light">
             {INTRO_MESSAGE}
           </p>
         </div>

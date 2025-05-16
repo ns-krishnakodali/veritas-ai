@@ -22,6 +22,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="assets/veritas.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          name="description"
+          content="Veritas AI - A RAG model as a personal assistant"
+        />
+      </head>
       <body className={`${nunito.variable} ${openSans.variable} antialiased`}>
         {children}
       </body>

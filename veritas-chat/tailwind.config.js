@@ -7,6 +7,7 @@ module.exports = {
         "primary-light": "var(--color-primary-light)",
         placeholder: "var(--color-placeholder)",
         border: "var(--color-border)",
+        "chat-bg": "var(--color-chat-bg)",
       },
     },
   },
