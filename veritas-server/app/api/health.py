@@ -5,7 +5,7 @@ router = APIRouter()
 
 
 @router.get("/health")
-def healthCheck() -> JSONResponse:
+def health_check() -> JSONResponse:
     return JSONResponse(
         status_code=status.HTTP_200_OK,
         content={
