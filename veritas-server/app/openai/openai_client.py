@@ -38,15 +38,20 @@ class OpenAIClient:
         try:
             self.client.models.list()
             logger.info("Successfully connected to OpenAI.")
-        except AuthenticationError:
+        except AuthenticationError as e:
             logger.error("Invalid OpenAI API key.")
+            raise RuntimeError("Invalid OpenAI API key.") from e
         except RateLimitError as e:
             logger.error(f"Insufficient quota for OpenAI API: {e}")
+            raise RuntimeError("Insufficient quota for OpenAI API.") from e
         except Exception as e:
             logger.error(f"An unexpected error occurred: {e}")
+            raise RuntimeError(
+                "OpenAI connection failed due to an unexpected error."
+            ) from e
 
     def chat_completion_stream(
-        self, prompt: str, max_tokens: int = 200
+        self, prompt: str, max_tokens: int = 100
     ) -> Iterator[str]:
         try:
             response = self.client.chat.completions.create(

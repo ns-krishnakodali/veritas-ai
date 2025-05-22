@@ -9,17 +9,26 @@ from typing import Iterator
 router = APIRouter()
 
 
-@router.post("/ask")
-async def rag_endpoint(request: Request) -> StreamingResponse:
+@router.post("/conversation")
+async def conversation_endpoint(request: Request) -> StreamingResponse:
     data = await request.json()
     query = data.get("query", "")
+    query = query.strip()
 
-    openai_client = OpenAIClient()
-
-    if openai_client.count_tokens(query) > 512:
+    try:
+        openai_client = OpenAIClient()
+    except Exception as e:
 
         def error_stream():
-            yield "event: error\ndata: Query exceeds token limit.\n\n"
+            yield "event: error\ndata: Something went wrong internally, please try again later.\n\n"
+
+        return StreamingResponse(error_stream(), media_type="text/event-stream")
+
+    token_count = openai_client.count_tokens(query)
+    if token_count == 0 or token_count > 512:
+
+        def error_stream():
+            yield "event: error\ndata: Query must be between 1 and 512 tokens.\n\n"
 
         return StreamingResponse(error_stream(), media_type="text/event-stream")
 

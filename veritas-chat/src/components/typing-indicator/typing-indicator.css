@@ -1,0 +1,18 @@
+.loader .dot {
+  animation: 1s blink infinite;
+  fill: var(--color-primary);
+}
+
+.loader .dot:nth-child(2) {
+  animation-delay: 250ms;
+}
+
+.loader .dot:nth-child(3) {
+  animation-delay: 500ms;
+}
+
+@keyframes blink {
+  50% {
+    fill: transparent;
+  }
+}
