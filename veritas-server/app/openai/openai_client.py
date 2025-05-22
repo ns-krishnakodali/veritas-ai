@@ -51,13 +51,17 @@ class OpenAIClient:
             ) from e
 
     def chat_completion_stream(
-        self, prompt: str, max_tokens: int = 100
+        self, prompt: str, max_tokens: int = 150
     ) -> Iterator[str]:
         try:
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
-                    {"role": "system", "content": prompt[0]},
+                    {
+                        "role": "system",
+                        "content": prompt[0]
+                        + f" Do not exceed {max_tokens} tokens in length.",
+                    },
                     {"role": "user", "content": prompt[1]},
                 ],
                 max_tokens=max_tokens,

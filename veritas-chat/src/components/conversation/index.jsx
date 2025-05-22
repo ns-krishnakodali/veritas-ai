@@ -1,5 +1,6 @@
 "use client";
 
+import { highlightUrl } from "../../utils";
 import TypingIndicator from "../typing-indicator";
 import "./component.css";
 
@@ -39,7 +40,7 @@ export const Conversation = ({ chats, showVeritasTyping }) => {
             className={`max-w-full text-left text-lg text-primary font-semibold
               break-words whitespace-normal rounded-lg px-2 py-1 ${chat.role === "user" && "bg-chat-bg"} tracking-wide`}
           >
-            {chat.message}
+            {highlightUrl(chat.message)}
           </p>
 
           {chat.role === "user" && (

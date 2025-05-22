@@ -1,3 +1,5 @@
+import { STREAM_ERROR } from "./constants";
+
 export const fetchStreamedResponse = (query, onData, onDone, onError) => {
   const controller = new AbortController();
 
@@ -43,7 +45,7 @@ export const fetchStreamedResponse = (query, onData, onDone, onError) => {
         }
       }
     } catch (err) {
-      onError?.("Something went wrong. Please try again.");
+      onError?.(STREAM_ERROR);
     }
   })();
 

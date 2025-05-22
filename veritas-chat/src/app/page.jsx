@@ -1,4 +1,4 @@
-import { VeritasPage } from "./veritas/page";
+import { VeritasPage } from "../components";
 
 const Home = () => {
   return <VeritasPage />;

@@ -53,7 +53,7 @@ def load_context():
 
 
 def search_similar_contexts(
-    query_embedding: np.ndarray, k: int = 5, similarity_threshold: float = 0.2
+    query_embedding: np.ndarray, k: int = 5, similarity_threshold: float = 0.1
 ):
     """
     Searches for top-k most similar context chunks based on the query embedding.

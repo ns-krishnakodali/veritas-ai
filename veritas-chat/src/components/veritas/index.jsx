@@ -4,7 +4,7 @@ import "./veritas.css";
 
 import { useState } from "react";
 
-import { Conversation } from "../../components";
+import { Conversation } from "..";
 import { fetchStreamedResponse, INTRO_MESSAGE } from "../../utils";
 
 export const VeritasPage = () => {
