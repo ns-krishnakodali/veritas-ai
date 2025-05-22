@@ -52,7 +52,7 @@ export const VeritasPage = () => {
       (chunk) => appendToChat(chunk),
       () => setIsLoading(false),
       (error) => {
-        appendToChat(`😞${error}`);
+        appendToChat(`${error}`);
         setIsLoading(false);
       },
     );
@@ -88,14 +88,12 @@ export const VeritasPage = () => {
             onChange={(e) => setUserMessage(e.target.value)}
             placeholder="Ask Veritas..."
             className="w-full px-4 py-2 bg-white rounded-md border border-border focus:outline-none focus:ring-1 focus:ring-border 
-             text-[16px] font-medium font-nunito text-[var(--color-gray)] 
-             placeholder:text-slate-400 transition-colors duration-100 ease-in-out"
+             text-[16px] font-medium font-nunito text-[var(--color-gray)] placeholder:text-slate-400 transition-colors duration-100 ease-in-out"
           />
           <button
             type="submit"
-            className={`px-4 py-2 flex items-center justify-center gap-1 bg-primary text-white rounded-md
-              font-medium hover:bg-primary-light transition-colors duration-100 
-              ${isLoading ? "cursor-progress" : "cursor-pointer"}`}
+            className={`px-4 py-2 flex items-center justify-center gap-1 bg-primary text-white rounded-md font-medium hover:bg-primary-light
+              transition-colors duration-100 ${isLoading ? "cursor-progress" : "cursor-pointer"}`}
             disabled={isLoading}
           >
             {isLoading ? (

@@ -39,8 +39,8 @@ export const Conversation = ({ chats, showVeritasTyping }) => {
           <p
             id={`chat-${index}`}
             ref={index === chats?.length - 1 ? lastMessageRef : null}
-            className={`max-w-[85%] sm:max-w-full text-left text-base sm:text-lg text-primary font-semibold
-              break-words whitespace-normal rounded-lg px-3 py-2 ${chat.role === "user" && "bg-chat-bg"} tracking-wide`}
+            className={`max-w-[85%] sm:max-w-full text-left text-base sm:text-lg text-primary font-semibold break-words whitespace-normal
+              rounded-lg px-3 py-2 ${chat.role === "user" && "bg-chat-bg"} tracking-wide`}
           >
             {highlightUrl(chat.message)}
           </p>
