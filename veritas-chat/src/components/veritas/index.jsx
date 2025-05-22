@@ -1,7 +1,5 @@
 "use client";
 
-import "./veritas.css";
-
 import { useState } from "react";
 
 import { Conversation } from "..";
@@ -66,7 +64,7 @@ export const VeritasPage = () => {
         Veritas AI
       </h1>
       {chats.length === 0 ? (
-        <div className="flex flex-col items-center justify-center mt-8">
+        <div className="flex flex-col items-center justify-center mt-8 slide-up">
           <img
             src="/assets/waving-hand.svg"
             alt="Waving Hand"
