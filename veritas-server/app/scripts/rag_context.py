@@ -2,8 +2,8 @@ import logging
 import numpy as np
 import os
 
+from app.openai.openai_client import OpenAIClient
 from app.scripts.chunking import chunk_data_from_path
-from app.scripts.openai_client import OpenAIClient
 from app.scripts.store import store_context
 
 logger = logging.getLogger(__name__)
@@ -40,11 +40,8 @@ def prepare_context_embeddings():
 
     embeddings = openai_client.get_embeddings(texts)
     if not embeddings:
-        print("No embeddings generated, exiting.")
+        logger.error("No embeddings generated, exiting.")
         return
 
     embeddings_np = np.array(embeddings).astype("float32")
     store_context(embeddings_np, context)
-
-
-prepare_context_embeddings()

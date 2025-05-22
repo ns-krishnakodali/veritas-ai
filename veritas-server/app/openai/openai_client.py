@@ -5,6 +5,8 @@ import tiktoken
 from dotenv import load_dotenv
 from openai import OpenAI, AuthenticationError, RateLimitError
 
+from typing import Iterator
+
 load_dotenv()
 
 logger = logging.getLogger(__name__)
@@ -12,17 +14,23 @@ logging.basicConfig(level=logging.INFO)
 
 
 class OpenAIClient:
-    def __init__(self, model_name: str = "text-embedding-3-small"):
+    def __init__(
+        self,
+        embedding_model_name: str = "text-embedding-3-small",
+        model_name: str = "gpt-4.1-mini",
+    ):
         self.api_key = os.getenv("OPENAI_API_KEY")
         if not self.api_key:
             raise ValueError("OPENAI_API_KEY environment variable is not set.")
 
-        self.model_name = model_name
         self.client = OpenAI(
             api_key=self.api_key, organization=os.getenv("OPENAI_ORGANIZATION")
         )
+
+        self.embedding_model = embedding_model_name
+        self.model = model_name
         self.token_limit = 8192
-        self.encoding = tiktoken.encoding_for_model(model_name)
+        self.encoding = tiktoken.encoding_for_model(embedding_model_name)
 
         self._check_connection()
 
@@ -37,13 +45,36 @@ class OpenAIClient:
         except Exception as e:
             logger.error(f"An unexpected error occurred: {e}")
 
+    def chat_completion_stream(
+        self, prompt: str, max_tokens: int = 200
+    ) -> Iterator[str]:
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": prompt[0]},
+                    {"role": "user", "content": prompt[1]},
+                ],
+                max_tokens=max_tokens,
+                temperature=0.7,
+                stream=True,
+            )
+
+            for chunk in response:
+                content = chunk.choices[0].delta.content
+                if content:
+                    yield f"data: {content}\n\n"
+        except Exception as e:
+            logger.error(f"Error in chat completion: {e}")
+            yield f"event: error\ndata: Sorry, I couldn't process your request.\n\n"
+
     def get_embedding(self, text: str) -> list[float]:
         """
         Generates an embedding for the input text using the specified OpenAI embedding model.
         """
         try:
             embd_response = self.client.embeddings.create(
-                input=text, model=self.model_name
+                input=text, model=self.embedding_model
             )
             return embd_response.data[0].embedding
         except Exception as e:
@@ -59,7 +90,7 @@ class OpenAIClient:
             embeddings = []
             for batch in batches:
                 embd_response = self.client.embeddings.create(
-                    input=batch, model=self.model_name
+                    input=batch, model=self.embedding_model
                 )
                 embeddings.extend([item.embedding for item in embd_response.data])
             return embeddings
@@ -76,7 +107,7 @@ class OpenAIClient:
         current_tokens, total_tokens = 0, 0
 
         for text in texts:
-            token_count = len(self.encoding.encode(text))
+            token_count = self.count_tokens(text)
             if current_tokens + token_count > self.token_limit:
                 if current_batch:
                     batches.append(current_batch)
@@ -91,5 +122,8 @@ class OpenAIClient:
             batches.append(current_batch)
             total_tokens += current_tokens
 
-        logger.info(f"Total tokens recordes: {total_tokens}")
+        logger.info(f"Total tokens recorded: {total_tokens}")
         return batches
+
+    def count_tokens(self, text: str) -> int:
+        return len(self.encoding.encode(text))

@@ -15,8 +15,9 @@ def store_context(embeddings_np: np.ndarray, context: list[dict]):
     Creates a FAISS index from embeddings and saves it along with context.
     """
     try:
-        faiss_index = faiss.IndexFlatL2(EMBEDDING_DIMENSION)
-        faiss_index.add(embeddings_np)
+        normalized_embeddings = normalize_embeddings(embeddings_np)
+        faiss_index = faiss.IndexFlatIP(EMBEDDING_DIMENSION)
+        faiss_index.add(normalized_embeddings)
 
         os.makedirs(EMBEDDINGS_PATH, exist_ok=True)
 
@@ -49,3 +50,37 @@ def load_context():
     except Exception as e:
         logger.error(f"Error while loading context: {e}")
         return None, None
+
+
+def search_similar_contexts(
+    query_embedding: np.ndarray, k: int = 5, similarity_threshold: float = 0.2
+):
+    """
+    Searches for top-k most similar context chunks based on the query embedding.
+    """
+    faiss_index, context_list = load_context()
+    if faiss_index is None or context_list is None:
+        logger.error("Failed to load FAISS index or context.")
+        return []
+
+    query_embedding = query_embedding / np.linalg.norm(
+        query_embedding, axis=1, keepdims=True
+    )
+    similarities, indices = faiss_index.search(query_embedding, k)
+
+    results = []
+    for similarity, idx in zip(similarities[0], indices[0]):
+        if idx == -1:
+            continue
+        if idx >= len(context_list):
+            break
+
+        if similarity >= similarity_threshold:
+            results.append(context_list[idx])
+
+    return results
+
+
+def normalize_embeddings(embeddings: np.ndarray) -> np.ndarray:
+    norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
+    return embeddings / norms
