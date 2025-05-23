@@ -1,0 +1,20 @@
+services:
+  server:
+    build:
+      context: ./veritas-server
+      dockerfile: Dockerfile
+    container_name: veritas-server
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  chat:
+    build:
+      context: ./veritas-chat
+      dockerfile: Dockerfile
+    container_name: veritas-chat
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    depends_on:
+      - server
