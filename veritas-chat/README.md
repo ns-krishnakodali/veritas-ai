@@ -1,23 +1,37 @@
-# Vercel Chat
+# Veritas Chat
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+User interface for Veritas AI, built using [Next.js](https://nextjs.org). This application provides a web UI for user chat.
+
+---
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to view the app in your browser.
 
-You can start editing the page by modifying `app/page.jsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Docker
+
+You can also run the application using Docker:
+
+```bash
+# Build the Docker image
+docker build -t veritas-chat .
+
+# Run the container
+docker run -p 3000:3000 veritas-chat
+```
+
+This will start the application on [http://localhost:3000](http://localhost:3000).

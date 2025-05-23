@@ -45,3 +45,7 @@ def prepare_context_embeddings():
 
     embeddings_np = np.array(embeddings).astype("float32")
     store_context(embeddings_np, context)
+
+
+if __name__ == "__main__":
+    prepare_context_embeddings()

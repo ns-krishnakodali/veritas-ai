@@ -4,13 +4,15 @@ from app.openai.openai_client import OpenAIClient
 from app.scripts.store import search_similar_contexts
 
 
-def build_prompt(query: str) -> list[str]:
-    openai_client = OpenAIClient()
+def build_prompt(query: str, openai_client: OpenAIClient) -> list[str]:
+    """
+    Construct the prompt using contexts retrieved from relevant embeddings.
+    """
     embedding = openai_client.get_embedding(query)
     embeddings_np = np.array(embedding).astype("float32")
     query_embedding = embeddings_np.reshape(1, -1)
 
-    # Fetch from vector store
+    # Fetch contexts from vector store
     contexts = search_similar_contexts(query_embedding)
     context_texts = [ctx.get("text", "") for ctx in contexts if ctx.get("text")]
     combined_context = "\n---\n".join(context_texts)

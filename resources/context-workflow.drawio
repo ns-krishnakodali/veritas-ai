@@ -1,0 +1,37 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.8">
+  <diagram name="Page-1" id="_nkyQkz3HhZpHypguE1t">
+    <mxGraphModel dx="1042" dy="562" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hbiY11onmtQi5FBCh3kt-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hbiY11onmtQi5FBCh3kt-2" target="hbiY11onmtQi5FBCh3kt-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hbiY11onmtQi5FBCh3kt-2" value="Data Collection&lt;br&gt;(.txt/.json)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="160" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hbiY11onmtQi5FBCh3kt-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hbiY11onmtQi5FBCh3kt-4" target="hbiY11onmtQi5FBCh3kt-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hbiY11onmtQi5FBCh3kt-4" value="Chunking" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="160" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hbiY11onmtQi5FBCh3kt-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hbiY11onmtQi5FBCh3kt-6" target="hbiY11onmtQi5FBCh3kt-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hbiY11onmtQi5FBCh3kt-6" value="Embedding" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="160" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hbiY11onmtQi5FBCh3kt-7" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="140" width="110" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="hbiY11onmtQi5FBCh3kt-8" value="FAISS" style="shape=datastore;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="635" y="160" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hbiY11onmtQi5FBCh3kt-9" value="&lt;span style=&quot;text-wrap-mode: wrap;&quot;&gt;Vector Store&lt;/span&gt;&lt;br style=&quot;text-wrap-mode: wrap;&quot;&gt;&lt;span style=&quot;text-wrap-mode: wrap;&quot;&gt;(Embeddings)&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="615" y="240" width="100" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -32,7 +32,7 @@ async def conversation_endpoint(request: Request) -> StreamingResponse:
 
         return StreamingResponse(error_stream(), media_type="text/event-stream")
 
-    prompt = build_prompt(query)
+    prompt = build_prompt(query, openai_client)
 
     def event_generator() -> Iterator[str]:
         try:
