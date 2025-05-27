@@ -16,6 +16,8 @@ def prepare_context_embeddings():
     texts, context = list(), list()
     openai_client = OpenAIClient()
 
+    logger.info("Started preparing embeddings for the raw data.")
+
     raw_data_chunks = chunk_data_from_path(os.path.join("app", "data", "raw"))
     for chunk in raw_data_chunks:
         text = str()
@@ -45,6 +47,7 @@ def prepare_context_embeddings():
 
     embeddings_np = np.array(embeddings).astype("float32")
     store_context(embeddings_np, context)
+    logger.info("Successfully generated embeddings for the raw data.")
 
 
 if __name__ == "__main__":

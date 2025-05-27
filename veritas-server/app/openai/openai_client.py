@@ -4,7 +4,6 @@ import tiktoken
 
 from dotenv import load_dotenv
 from openai import OpenAI, AuthenticationError, RateLimitError
-
 from typing import Iterator
 
 load_dotenv()
@@ -111,8 +110,7 @@ class OpenAIClient:
         """
         Batches texts such that each batch stays within the token limit for embedding requests.
         """
-        batches = []
-        current_batch = []
+        batches, current_batch = [], []
         current_tokens, total_tokens = 0, 0
 
         for text in texts:

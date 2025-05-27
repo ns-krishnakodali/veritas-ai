@@ -1,3 +1,5 @@
+import logging
+
 from app.openai.openai_client import OpenAIClient
 from app.scripts.prompt import build_prompt
 
@@ -6,6 +8,7 @@ from fastapi.responses import StreamingResponse
 
 from typing import Iterator
 
+logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
@@ -15,22 +18,24 @@ async def conversation_endpoint(request: Request) -> StreamingResponse:
     query = data.get("query", "")
     query = query.strip()
 
+    logger.info(f"Responding for query: {query}")
+
     try:
         openai_client = OpenAIClient()
     except Exception as e:
 
-        def error_stream():
+        def openai_error_stream():
             yield "event: error\ndata: Something went wrong internally, please try again later.\n\n"
 
-        return StreamingResponse(error_stream(), media_type="text/event-stream")
+        return StreamingResponse(openai_error_stream(), media_type="text/event-stream")
 
     token_count = openai_client.count_tokens(query)
     if token_count == 0 or token_count > 512:
 
-        def error_stream():
+        def query_error_stream():
             yield "event: error\ndata: Query must be between 1 and 512 tokens.\n\n"
 
-        return StreamingResponse(error_stream(), media_type="text/event-stream")
+        return StreamingResponse(query_error_stream(), media_type="text/event-stream")
 
     prompt = build_prompt(query, openai_client)
 

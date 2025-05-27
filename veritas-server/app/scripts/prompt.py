@@ -1,13 +1,18 @@
+import logging
 import numpy as np
 
 from app.openai.openai_client import OpenAIClient
 from app.scripts.store import search_similar_contexts
+
+logger = logging.getLogger(__name__)
 
 
 def build_prompt(query: str, openai_client: OpenAIClient) -> list[str]:
     """
     Construct the prompt using contexts retrieved from relevant embeddings.
     """
+    logger.info(f"Building prompt for: {query}")
+
     embedding = openai_client.get_embedding(query)
     embeddings_np = np.array(embedding).astype("float32")
     query_embedding = embeddings_np.reshape(1, -1)

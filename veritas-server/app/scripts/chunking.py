@@ -1,7 +1,10 @@
+import logging
 import os
 import json
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+logger = logging.getLogger(__name__)
 
 
 def chunk_text(
@@ -10,6 +13,8 @@ def chunk_text(
     """
     Splits raw text into smaller overlapping chunks using recursive character splitting.
     """
+    logging.debug(f"Chunking text: {text_data}")
+
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
@@ -25,6 +30,8 @@ def chunk_json(
     """
     Splits a list of JSON entries into smaller overlapping chunks, preserving and updating metadata.
     """
+    logging.debug(f"Chunking JSON: {json_data}")
+
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
@@ -53,8 +60,9 @@ def chunk_data_from_path(data_path):
     """
     Scan and chunk all the raw data from files in the `data_path`.
     """
-    chunks = list()
+    logger.info(f"Chunking data from path: {data_path}")
 
+    chunks = list()
     for file_name in os.listdir(data_path):
         file_content = str()
         file_extension = os.path.splitext(file_name)[1].lower()

@@ -51,5 +51,5 @@ If using a local Python environment:
 
 ```bash
 # Activate the virtual environment first
-uvicorn main:app --host 0.0.0.0 --port 8000
+uvicorn main:app --reload --port 8000
 ```
