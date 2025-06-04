@@ -1,6 +1,6 @@
 # Veritas AI Server
 
-Backend server for Veritas AI, built with FastAPI. It handles API requests from the Veritas chat system, manages language model interactions, user requests, and streams responses back in real time.
+Backend service for Veritas AI, built using FastAPI. It handles API requests from the Veritas chat app, manages language model interactions, user requests, and streams responses back in real time.
 
 ---
 
