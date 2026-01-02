@@ -78,6 +78,8 @@ def search_similar_contexts(
         if similarity >= similarity_threshold:
             results.append(context_list[idx])
 
+    logger.info(f"Found {len(results)} contexts above similarity threshold")
+
     return results
 
 
