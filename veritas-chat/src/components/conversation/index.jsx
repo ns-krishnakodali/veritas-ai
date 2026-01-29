@@ -28,7 +28,7 @@ export const Conversation = ({ chats, showVeritasTyping }) => {
             <img
               src="/assets/llm-icon.svg"
               alt="LLM Icon"
-              className="mr-2 mt-[2px]"
+              className="mr-2 mt-0.5"
               width={20}
               height={20}
             />
@@ -39,7 +39,7 @@ export const Conversation = ({ chats, showVeritasTyping }) => {
           <p
             id={`chat-${index}`}
             ref={index === chats?.length - 1 ? lastMessageRef : null}
-            className={`max-w-[85%] sm:max-w-full text-left text-base sm:text-lg text-primary font-semibold break-words whitespace-normal
+            className={`max-w-[85%] sm:max-w-full text-left text-base sm:text-lg text-primary font-semibold wrap-break-word whitespace-normal
               rounded-lg px-3 py-2 ${chat.role === "user" && "bg-chat-bg"} tracking-wide`}
           >
             {highlightUrl(chat.message)}
@@ -49,7 +49,7 @@ export const Conversation = ({ chats, showVeritasTyping }) => {
             <img
               src="/assets/user-icon.svg"
               alt="User Icon"
-              className="ml-2 mt-[2px]"
+              className="ml-2 mt-0.5"
               width={16}
               height={16}
             />

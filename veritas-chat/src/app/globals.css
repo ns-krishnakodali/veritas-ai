@@ -10,6 +10,8 @@
   --color-foreground: var(--foreground);
   --color-primary: #11295e;
   --color-primary-light: #11295ec6;
+  --color-background-1: rgba(205, 219, 224, 0.3);
+  --background-gradient: linear-gradient(to right, #037af2, #133f99);
   --color-border: #66a5cf;
   --color-placeholder: #94a3b8;
   --color-chat-bg: #007bff29;
