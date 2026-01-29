@@ -1,12 +1,14 @@
+export const ASK_VERITAS = "Ask Veritas anything about Krishna";
+
 export const INTRO_MESSAGE =
-  "Hi! I'm Veritas, a RAG-powered AI here to help you learn more about Krishna.";
+  "I've read his code, resume, and projects so you don't have to.";
 
 export const STREAM_ERROR =
   "Something went wrong. Please try again. Meanwhile, feel free to check out Krishna's website: https://www.nskrishnakodali.com/";
 
 export const SUGGESTED_QUERIES = [
-  "What is Krishna's technical background?",
-  "Tell me about his work experience.",
-  "What are his main technical skills?",
+  "What is his tech background?",
+  "Summarize his work experience.",
   "Show me his key projects.",
+  "His main technical skills?",
 ];

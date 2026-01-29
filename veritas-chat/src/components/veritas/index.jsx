@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Conversation } from "..";
 import { TerminalIcon, SendIcon, SparklesIcon, RobotIcon } from "./icons";
 import {
+  ASK_VERITAS,
   fetchStreamedResponse,
   INTRO_MESSAGE,
   SUGGESTED_QUERIES,
@@ -22,7 +23,7 @@ export const VeritasPage = () => {
   useEffect(() => {
     const checkStatus = async () => {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const timeoutId = setTimeout(() => controller.abort(), 60000);
 
       try {
         const response = await fetch(
@@ -118,7 +119,7 @@ export const VeritasPage = () => {
       ) : (
         <div className="flex flex-col items-center justify-center text-center px-4 pt-5 pb-10 appear">
           {/* Header */}
-          <div className="flex items-center justify-between w-full px-4">
+          <div className="flex items-center justify-between w-full px-2 md:px-4 lg:px-8">
             <div className="flex items-center justify-center gap-2">
               <div
                 className="w-10 h-10 bg-linear-to-tr from-primary to-primary-light rounded-xl
@@ -156,21 +157,24 @@ export const VeritasPage = () => {
             </a>
           </div>
           {chats.length === 0 ? (
-            <div className="flex flex-col items-center justify-center mt-16 slide-up">
+            <div className="flex flex-col items-center justify-center mt-16 slide-up px-4 md:px-2">
               <div
                 className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center shadow-xl
             border border-indigo-100 rotate-3 transform transition-transform hover:rotate-6"
               >
                 <TerminalIcon />
               </div>
-              <p className="w-4/5 my-6 text-lg font-semibold text-primary-light">
+              <h2 className="text-3xl font-extrabold text-primary mt-4">
+                {ASK_VERITAS}
+              </h2>
+              <p className="w-full mt-2 mb-6 text-lg font-semibold text-primary-light">
                 {INTRO_MESSAGE}
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 w-full">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 w-full md:gap-y-6">
                 {SUGGESTED_QUERIES.map((query, idx) => (
                   <button
                     key={idx}
-                    className="group flex w-full items-center justify-between px-4 py-4
+                    className="group flex w-full md:min-w-72 items-center justify-between px-4 py-4
                     bg-white border border-indigo-50 rounded-xl text-left text-slate-700
                     font-semibold shadow-sm transition-all duration-200 hover:border-indigo-300
                     hover:shadow-md hover:text-indigo-700 cursor-pointer
@@ -188,7 +192,7 @@ export const VeritasPage = () => {
           ) : (
             <Conversation chats={chats} showVeritasTyping={isLoading} />
           )}
-          <div className="w-full px-4 py-8 shadow-md fixed bottom-0">
+          <div className="w-full px-8 py-8 shadow-md fixed bottom-0 md:px-4">
             <form
               onSubmit={handleSubmit}
               className="max-w-2xl mx-auto flex gap-2"
