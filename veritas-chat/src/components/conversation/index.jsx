@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 import TypingIndicator from "../typing-indicator";
 
-import { highlightUrl } from "../../utils";
+import { highlightLinks } from "../../utils";
 
 export const Conversation = ({ chats, showVeritasTyping }) => {
   const lastMessageRef = useRef(null);
@@ -42,7 +42,7 @@ export const Conversation = ({ chats, showVeritasTyping }) => {
             className={`max-w-[85%] sm:max-w-full text-left text-base sm:text-lg text-primary font-semibold wrap-break-word whitespace-normal
               rounded-lg px-3 py-2 ${chat.role === "user" && "bg-chat-bg"} tracking-wide`}
           >
-            {highlightUrl(chat.message)}
+            {highlightLinks(chat.message)}
           </p>
 
           {chat.role === "user" && (
