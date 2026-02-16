@@ -6,8 +6,9 @@ Backend service for Veritas AI, built using FastAPI. It handles API requests fro
 
 ## Server Setup
 
-You can run the server either using Docker or a local Python environment.
-Ensure that a `.env` file exists in the project root. This file contains configuration such as your OpenAI credentials, which are required to access the language model APIs.
+The repository includes an `.env.example` file defining required environment variables. Create a `.env` file in the project root based on this template.
+
+Once the environment variables are configured, the server can be started using the following options:
 
 ---
 
@@ -58,7 +59,7 @@ uvicorn main:app --reload --port 8000
 
 ## Running the Context Workflow
 
-To ingest documents and generate context for the RAG system:
+To ingest documents and generate embeddings for the RAG system:
 
 1. Place your `.txt` or `.json` files in the following directory:
 
