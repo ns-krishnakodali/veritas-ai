@@ -118,7 +118,6 @@ export const VeritasPage = () => {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center text-center px-4 pt-5 pb-10 appear">
-          {/* Header */}
           <div className="flex items-center justify-between w-full px-2 md:px-4 lg:px-8">
             <div className="flex items-center justify-center gap-2">
               <div
