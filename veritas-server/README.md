@@ -57,6 +57,14 @@ uvicorn main:app --reload --port 8000
 
 ---
 
+## Running Tests
+
+```bash
+python -m unittest discover -v
+```
+
+---
+
 ## Running the Context Workflow
 
 To ingest documents and generate embeddings for the RAG system:

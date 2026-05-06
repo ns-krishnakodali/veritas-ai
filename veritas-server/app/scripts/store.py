@@ -3,11 +3,39 @@ import logging
 import numpy as np
 import os
 import pickle
+import re
 
 logger = logging.getLogger(__name__)
 
 EMBEDDINGS_PATH = os.path.join("app", "data", "embeddings")
 EMBEDDING_DIMENSION = 1536
+STOPWORDS = {
+    "a",
+    "an",
+    "and",
+    "are",
+    "as",
+    "at",
+    "for",
+    "from",
+    "has",
+    "he",
+    "his",
+    "in",
+    "is",
+    "it",
+    "krishna",
+    "of",
+    "on",
+    "or",
+    "tell",
+    "the",
+    "to",
+    "what",
+    "which",
+    "who",
+    "with",
+}
 
 
 def store_context(embeddings_np: np.ndarray, context: list[dict]):
@@ -53,7 +81,11 @@ def load_context():
 
 
 def search_similar_contexts(
-    query_embedding: np.ndarray, k: int = 5, similarity_threshold: float = 0.1
+    query_embedding: np.ndarray,
+    query: str = "",
+    k: int = 8,
+    fetch_k: int = 24,
+    similarity_threshold: float = 0.12,
 ):
     """
     Searches for top-k most similar context chunks based on the query embedding.
@@ -62,11 +94,13 @@ def search_similar_contexts(
     if faiss_index is None or context_list is None:
         logger.error("Failed to load FAISS index or context.")
         return []
+    if faiss_index.ntotal == 0:
+        logger.warning("FAISS index is empty.")
+        return []
 
-    query_embedding = query_embedding / np.linalg.norm(
-        query_embedding, axis=1, keepdims=True
-    )
-    similarities, indices = faiss_index.search(query_embedding, k)
+    query_embedding = normalize_embeddings(query_embedding)
+    candidate_count = min(fetch_k, faiss_index.ntotal)
+    similarities, indices = faiss_index.search(query_embedding, candidate_count)
 
     results = []
     for similarity, idx in zip(similarities[0], indices[0]):
@@ -76,13 +110,55 @@ def search_similar_contexts(
             break
 
         if similarity >= similarity_threshold:
-            results.append(context_list[idx])
+            context = context_list[idx].copy()
+            lexical_score = calculate_lexical_score(query, context)
+            context["_score"] = float((0.82 * similarity) + (0.18 * lexical_score))
+            context["_vector_score"] = float(similarity)
+            context["_lexical_score"] = float(lexical_score)
+            results.append(context)
 
-    logger.info(f"Found {len(results)} contexts above similarity threshold")
+    results.sort(key=lambda context: context["_score"], reverse=True)
+    results = results[:k]
+    logger.info(f"Found {len(results)} ranked contexts above similarity threshold")
 
     return results
 
 
 def normalize_embeddings(embeddings: np.ndarray) -> np.ndarray:
     norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
-    return embeddings / norms
+    return embeddings / np.maximum(norms, 1e-12)
+
+
+def calculate_lexical_score(query: str, context: dict) -> float:
+    query_terms = tokenize_for_search(query)
+    if not query_terms:
+        return 0.0
+
+    metadata = get_context_metadata(context)
+    searchable_parts = [context.get("text", "")]
+    for value in metadata.values():
+        if isinstance(value, list):
+            searchable_parts.extend(str(item) for item in value)
+        else:
+            searchable_parts.append(str(value))
+
+    context_terms = tokenize_for_search(" ".join(searchable_parts))
+    if not context_terms:
+        return 0.0
+
+    return len(query_terms.intersection(context_terms)) / len(query_terms)
+
+
+def get_context_metadata(context: dict) -> dict:
+    metadata = context.get("metadata") or {}
+    flattened_metadata = {
+        key: value
+        for key, value in context.items()
+        if key not in {"text", "metadata"} and not key.startswith("_")
+    }
+    return {**metadata, **flattened_metadata}
+
+
+def tokenize_for_search(text: str) -> set[str]:
+    terms = set(re.findall(r"[a-z0-9+#.]+", text.lower()))
+    return {term for term in terms if len(term) > 1 and term not in STOPWORDS}

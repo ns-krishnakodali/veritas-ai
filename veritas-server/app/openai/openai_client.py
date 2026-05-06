@@ -16,7 +16,7 @@ class OpenAIClient:
     def __init__(
         self,
         embedding_model_name: str = "text-embedding-3-small",
-        model_name: str = "gpt-4.1-mini",
+        model_name: str = "gpt-5.4-nano",
     ):
         self.api_key = os.getenv("OPENAI_API_KEY")
         if not self.api_key:
@@ -50,21 +50,21 @@ class OpenAIClient:
             ) from e
 
     def chat_completion_stream(
-        self, prompt: str, max_tokens: int = 150
+        self, prompt: list[str], max_tokens: int = 450
     ) -> Iterator[str]:
         try:
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
                     {
-                        "role": "system",
+                        "role": "developer",
                         "content": prompt[0]
                         + f" Do not exceed {max_tokens} tokens in length.",
                     },
                     {"role": "user", "content": prompt[1]},
                 ],
-                max_tokens=max_tokens,
-                temperature=0.7,
+                max_completion_tokens=max_tokens,
+                reasoning_effort="low",
                 stream=True,
             )
 
