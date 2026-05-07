@@ -102,7 +102,7 @@ export const VeritasPage = () => {
   return (
     <>
       {isLoadingScreen ? (
-        <div className="flex h-screen w-screen flex-col items-center justify-center gap-3">
+        <div className="flex min-h-dvh w-screen flex-col items-center justify-center gap-3">
           <img
             src="/assets/loader.svg"
             alt="Loader"
@@ -115,7 +115,7 @@ export const VeritasPage = () => {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center px-4 pt-5 pb-32 text-center">
+        <div className="flex min-h-dvh flex-col items-center px-4 pt-5 pb-28 text-center sm:pb-32">
           <div className="flex w-full items-center justify-between px-2 md:px-4 lg:px-8">
             <div className="flex items-center justify-center gap-2">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-brand-strong shadow-card">
@@ -150,7 +150,7 @@ export const VeritasPage = () => {
               <img
                 src="/assets/redirect-icon.png"
                 alt="Redirect Icon"
-                className="ml-1 h-3.5 w-3.5 [filter:brightness(0)_saturate(100%)_invert(79%)_sepia(43%)_saturate(746%)_hue-rotate(123deg)_brightness(96%)_contrast(91%)]"
+                className="ml-1 h-3.5 w-3.5 filter-[brightness(0)_saturate(100%)_invert(79%)_sepia(43%)_saturate(746%)_hue-rotate(123deg)_brightness(96%)_contrast(91%)]"
               />
             </a>
           </div>
@@ -174,7 +174,7 @@ export const VeritasPage = () => {
                     key={idx}
                     className="group flex w-full cursor-pointer items-center justify-between rounded-xl border border-border bg-surface px-4 py-4 text-left font-semibold
                       text-text shadow-card transition-all duration-200 hover:border-border-strong hover:text-primary hover:shadow-glow disabled:cursor-not-allowed
-                      disabled:opacity-50 disabled:hover:border-border disabled:hover:shadow-card disabled:hover:text-text md:min-w-72"
+                      disabled:opacity-50 disabled:hover:border-border disabled:hover:shadow-card disabled:hover:text-text md:min-w-76"
                     disabled={!isActive}
                     onClick={() => handleSelectedQuery(idx)}
                   >
@@ -187,7 +187,7 @@ export const VeritasPage = () => {
           ) : (
             <Conversation chats={chats} showVeritasTyping={isLoading} />
           )}
-          <div className="fixed bottom-0 w-full px-8 py-8 md:px-4">
+          <div className="fixed inset-x-0 bottom-0 px-4 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-3 sm:px-8 sm:py-8 md:px-4">
             <div className="mx-auto max-w-2xl rounded-3xl border border-border bg-surface/90 p-3 shadow-shell backdrop-blur-xl">
               <form onSubmit={handleSubmit} className="mx-auto flex gap-2">
                 <input

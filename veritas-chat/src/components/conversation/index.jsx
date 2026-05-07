@@ -11,13 +11,19 @@ export const Conversation = ({ chats, showVeritasTyping }) => {
 
   useEffect(() => {
     if (lastMessageRef.current) {
-      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+      requestAnimationFrame(() => {
+        lastMessageRef.current?.scrollIntoView({
+          behavior: showVeritasTyping ? "auto" : "smooth",
+          block: "nearest",
+          inline: "nearest",
+        });
+      });
     }
-  }, [chats]);
+  }, [chats, showVeritasTyping]);
 
   return (
     <div
-      className="mt-8 mb-40 flex w-full max-w-6xl flex-col items-center justify-center px-2 sm:px-4"
+      className="mt-8 mb-28 flex w-full max-w-6xl flex-col items-center justify-center px-2 sm:mb-40 sm:px-4"
       aria-live="polite"
     >
       {chats.map((chat, index) => (
@@ -46,11 +52,12 @@ export const Conversation = ({ chats, showVeritasTyping }) => {
           <div
             id={`chat-${index}`}
             ref={index === chats?.length - 1 ? lastMessageRef : null}
-            className={`w-fit max-w-full whitespace-normal break-words rounded-lg px-3 py-2 text-left text-[15px] font-semibold tracking-wide text-primary sm:text-base ${
-              chat.role === "user"
-                ? "border border-amber-400/25 bg-user-bg shadow-card"
-                : ""
-            }`}
+            className={`w-fit max-w-full scroll-mb-28 whitespace-normal wrap-break-word rounded-lg px-3 py-2 text-left text-[15px] font-semibold tracking-wide
+              text-primary sm:scroll-mb-36 sm:text-base ${
+                chat.role === "user"
+                  ? "border border-amber-400/25 bg-user-bg shadow-card"
+                  : ""
+              }`}
           >
             {formatText(chat.message)}
           </div>

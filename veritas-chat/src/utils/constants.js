@@ -8,7 +8,7 @@ export const STREAM_ERROR =
 
 export const SUGGESTED_QUERIES = [
   "What is his tech background?",
-  "Summarize his work experience.",
-  "Show me his key projects.",
+  "Summarize his work experience",
+  "Show me his key projects",
   "His main technical skills?",
 ];
