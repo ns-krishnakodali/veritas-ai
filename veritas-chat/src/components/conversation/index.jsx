@@ -16,43 +16,55 @@ export const Conversation = ({ chats, showVeritasTyping }) => {
   }, [chats]);
 
   return (
-    <div className="flex flex-col w-[95%] sm:w-4/5 md:w-3/5 mx-auto items-center justify-center mt-8 mb-12">
+    <div
+      className="mt-8 mb-40 flex w-full max-w-6xl flex-col items-center justify-center px-2 sm:px-4"
+      aria-live="polite"
+    >
       {chats.map((chat, index) => (
         <div
           key={index}
-          className={`flex w-full sm:w-4/5 justify-center mb-3 ${
-            chat.role === "user" ? "justify-end slide-up" : "justify-start"
+          className={`mb-3 flex w-full items-center justify-center ${
+            chat.role === "user"
+              ? "justify-end animate-[slide-up_0.5s_ease-out_forwards]"
+              : "justify-start"
           }`}
         >
           {chat.role === "veritas" && (
-            <img
-              src="/assets/llm-icon.svg"
-              alt="LLM Icon"
-              className="mr-2 mt-0.5"
-              width={20}
-              height={20}
-            />
+            <span className="mr-2 flex h-8 w-8 shrink-0 items-center justify-center self-center rounded-full border border-border bg-panel shadow-card">
+              <img
+                src="/assets/llm-icon.svg"
+                alt="LLM Icon"
+                className="h-4 w-4 filter-[brightness(0)_saturate(100%)_invert(79%)_sepia(43%)_saturate(746%)_hue-rotate(123deg)_brightness(96%)_contrast(91%)]"
+                width={16}
+                height={16}
+              />
+            </span>
           )}
           {showVeritasTyping &&
             chat.role === "veritas" &&
             chat.message === "" && <TypingIndicator />}
-          <p
+          <div
             id={`chat-${index}`}
             ref={index === chats?.length - 1 ? lastMessageRef : null}
-            className={`max-w-[85%] sm:max-w-full text-left text-base sm:text-lg text-primary font-semibold wrap-break-word whitespace-normal
-              rounded-lg px-3 py-2 ${chat.role === "user" && "bg-chat-bg"} tracking-wide`}
+            className={`w-fit max-w-full whitespace-normal break-words rounded-lg px-3 py-2 text-left text-[15px] font-semibold tracking-wide text-primary sm:text-base ${
+              chat.role === "user"
+                ? "border border-amber-400/25 bg-user-bg shadow-card"
+                : ""
+            }`}
           >
             {formatText(chat.message)}
-          </p>
+          </div>
 
           {chat.role === "user" && (
-            <img
-              src="/assets/user-icon.svg"
-              alt="User Icon"
-              className="ml-2 mt-0.5"
-              width={16}
-              height={16}
-            />
+            <span className="ml-2 flex h-8 w-8 shrink-0 items-center justify-center self-center rounded-full border border-amber-400/25 bg-user-bg shadow-card">
+              <img
+                src="/assets/user-icon.svg"
+                alt="User Icon"
+                className="h-3.5 w-3.5 invert opacity-90"
+                width={14}
+                height={14}
+              />
+            </span>
           )}
         </div>
       ))}

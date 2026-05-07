@@ -32,7 +32,7 @@ export const TerminalIcon = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="w-10 h-10 text-primary"
+    className="h-10 w-10 text-primary"
     aria-hidden="true"
   >
     <path d="M12 19h8" />

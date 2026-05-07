@@ -1,11 +1,12 @@
-import "./typing-indicator.css";
-
 const TypingIndicator = () => (
-  <svg height="40" width="40" className="loader">
-    <circle className="dot" cx="10" cy="20" r="3" />
-    <circle className="dot" cx="20" cy="20" r="3" />
-    <circle className="dot" cx="30" cy="20" r="3" />
-  </svg>
+  <div
+    className="inline-flex items-center gap-1.5 text-primary"
+    aria-label="Veritas is typing"
+  >
+    <span className="h-2 w-2 rounded-full bg-current animate-[blink_1s_infinite]" />
+    <span className="h-2 w-2 rounded-full bg-current animate-[blink_1s_infinite] [animation-delay:250ms]" />
+    <span className="h-2 w-2 rounded-full bg-current animate-[blink_1s_infinite] [animation-delay:500ms]" />
+  </div>
 );
 
 export default TypingIndicator;

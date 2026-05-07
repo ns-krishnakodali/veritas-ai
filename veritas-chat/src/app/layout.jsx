@@ -15,7 +15,7 @@ const openSans = Open_Sans({
 });
 
 export const metadata = {
-  title: "Vertias AI",
+  title: "Veritas AI",
   description: "A RAG model as a personal assistant",
 };
 
@@ -29,7 +29,9 @@ export default function RootLayout({ children }) {
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
         />
       </head>
-      <body className={`${nunito.variable} ${openSans.variable} antialiased`}>
+      <body
+        className={`${nunito.variable} ${openSans.variable} relative min-h-screen overflow-x-hidden bg-app-bg font-sans text-app-fg antialiased`}
+      >
         {children}
       </body>
     </html>

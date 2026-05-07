@@ -1,55 +1,128 @@
 @import "tailwindcss";
 
 :root {
-  --background: #cddbe0;
-  --foreground: #171717;
+  color-scheme: dark;
+  --app-background: #0b0f14;
+  --app-foreground: #d8e0ea;
+  --app-primary: #f6f8fb;
+  --app-text: #d8e0ea;
+  --app-muted: #94a3b8;
+  --app-secondary: #c6d3e1;
+  --app-accent: #f59e0b;
+  --app-border: rgba(148, 163, 184, 0.24);
+  --app-border-strong: rgba(45, 212, 191, 0.48);
+  --app-surface: rgba(17, 25, 35, 0.78);
+  --app-panel: rgba(11, 15, 20, 0.58);
+  --app-panel-soft: rgba(45, 212, 191, 0.1);
+  --app-user-bg: rgba(245, 158, 11, 0.1);
+  --app-gradient-brand: linear-gradient(90deg, #2dd4bf, #f59e0b);
+  --app-gradient-soft: linear-gradient(
+    135deg,
+    rgba(45, 212, 191, 0.2),
+    rgba(245, 158, 11, 0.12)
+  );
+  --app-gradient-strong: linear-gradient(135deg, #0f766e, #2563eb);
+  --app-background-page:
+    radial-gradient(
+      circle at 12% 10%,
+      rgba(45, 212, 191, 0.14),
+      transparent 30rem
+    ),
+    radial-gradient(
+      circle at 88% 4%,
+      rgba(245, 158, 11, 0.1),
+      transparent 28rem
+    ),
+    radial-gradient(
+      circle at 70% 72%,
+      rgba(56, 189, 248, 0.08),
+      transparent 32rem
+    ),
+    linear-gradient(180deg, #0b0f14 0%, #0d1219 44%, #0a0d12 100%);
+  --app-shadow-shell: 0 20px 50px rgba(0, 0, 0, 0.34);
+  --app-shadow-card: 0 14px 34px rgba(0, 0, 0, 0.24);
+  --app-shadow-glow:
+    0 0 0 1px rgba(45, 212, 191, 0.16), 0 20px 48px rgba(0, 0, 0, 0.28);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: #11295e;
-  --color-primary-light: #11295ec6;
-  --color-background-1: rgba(205, 219, 224, 0.3);
-  --background-gradient: linear-gradient(to right, #037af2, #133f99);
-  --color-border: #66a5cf;
-  --color-placeholder: #94a3b8;
-  --color-chat-bg: #007bff29;
+  --color-app-bg: var(--app-background);
+  --color-app-fg: var(--app-foreground);
+  --color-primary: var(--app-primary);
+  --color-text: var(--app-text);
+  --color-muted: var(--app-muted);
+  --color-secondary: var(--app-secondary);
+  --color-accent: var(--app-accent);
+  --color-border: var(--app-border);
+  --color-border-strong: var(--app-border-strong);
+  --color-surface: var(--app-surface);
+  --color-panel: var(--app-panel);
+  --color-panel-soft: var(--app-panel-soft);
+  --color-user-bg: var(--app-user-bg);
+  --shadow-shell: var(--app-shadow-shell);
+  --shadow-card: var(--app-shadow-card);
+  --shadow-glow: var(--app-shadow-glow);
+  --background-image-brand: var(--app-gradient-brand);
+  --background-image-brand-soft: var(--app-gradient-soft);
+  --background-image-brand-strong: var(--app-gradient-strong);
+  --font-sans: var(--font-open-sans), sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: "Nunito", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background: var(--app-background-page);
+  background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), transparent 80%);
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  color: var(--app-background);
+  background: #2dd4bf;
 }
 
 *::-webkit-scrollbar {
   width: 0.5rem;
   height: 0.5rem;
-  background-color: var(--color-background);
+  background-color: var(--app-background);
 }
 
 *::-webkit-scrollbar-track {
-  background: #8e9cb037;
+  background: rgba(148, 163, 184, 0.08);
   border-radius: 8px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #8e9cb0b5;
+  background: rgba(45, 212, 191, 0.44);
   border-radius: 0.5rem;
   transition: all 0.3s ease-in-out;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: #8e9cb0;
-}
-
-.appear {
-  animation: fade-in 0.3s ease-out forwards;
-}
-
-.slide-up {
-  animation: slide-up 0.5s ease-out forwards;
+  background: rgba(245, 158, 11, 0.7);
 }
 
 @keyframes fade-in {
@@ -69,5 +142,17 @@ body {
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    background-attachment: scroll;
   }
 }

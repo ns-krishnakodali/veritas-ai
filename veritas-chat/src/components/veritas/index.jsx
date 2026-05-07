@@ -1,16 +1,14 @@
 "use client";
 
-import "./veritas.css";
-
 import { useEffect, useState } from "react";
 
 import { Conversation } from "..";
-import { TerminalIcon, SendIcon, SparklesIcon, RobotIcon } from "./icons";
+import { SendIcon, SparklesIcon, TerminalIcon, RobotIcon } from "./icons";
 import {
   ASK_VERITAS,
-  fetchStreamedResponse,
   INTRO_MESSAGE,
   SUGGESTED_QUERIES,
+  fetchStreamedResponse,
 } from "../../utils";
 
 export const VeritasPage = () => {
@@ -35,7 +33,7 @@ export const VeritasPage = () => {
         setIsActive(false);
 
         if (error.name === "AbortError") {
-          console.error("Request timed out after 5 seconds");
+          console.error("Request timed out after 60 seconds");
         }
       } finally {
         clearTimeout(timeoutId);
@@ -104,7 +102,7 @@ export const VeritasPage = () => {
   return (
     <>
       {isLoadingScreen ? (
-        <div className="flex flex-col items-center justify-center w-screen h-screen gap-3">
+        <div className="flex h-screen w-screen flex-col items-center justify-center gap-3">
           <img
             src="/assets/loader.svg"
             alt="Loader"
@@ -112,31 +110,28 @@ export const VeritasPage = () => {
             height={60}
             className="animate-spin"
           />
-          <p className="text-lg font-bold text-primary tracking-wide">
+          <p className="text-lg font-bold tracking-wide text-primary">
             Loading Veritas AI...
           </p>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center text-center px-4 pt-5 pb-10 appear">
-          <div className="flex items-center justify-between w-full px-2 md:px-4 lg:px-8">
+        <div className="flex flex-col items-center justify-center px-4 pt-5 pb-32 text-center">
+          <div className="flex w-full items-center justify-between px-2 md:px-4 lg:px-8">
             <div className="flex items-center justify-center gap-2">
-              <div
-                className="w-10 h-10 bg-linear-to-tr from-primary to-primary-light rounded-xl
-          flex items-center justify-center shadow-inner border border-white/10"
-              >
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-brand-strong shadow-card">
                 <RobotIcon />
               </div>
               <div className="flex flex-col justify-center gap-0">
-                <h1 className="text-primary text-lg font-bold leading-tight tracking-wide cursor-default">
+                <h1 className="cursor-default text-lg font-bold leading-tight tracking-wide text-primary">
                   Veritas
                 </h1>
                 <div className="flex items-center gap-1">
                   <span
-                    className={`w-3 h-3 rounded-full ${
-                      isActive ? "bg-green-500" : "bg-red-500"
+                    className={`h-3 w-3 rounded-full ${
+                      isActive ? "bg-emerald-400" : "bg-rose-400"
                     }`}
                   />
-                  <span className="text-xs font-bold text-slate-700 uppercase">
+                  <span className="text-xs font-bold uppercase text-muted">
                     {isActive ? "Active" : "Inactive"}
                   </span>
                 </div>
@@ -145,40 +140,41 @@ export const VeritasPage = () => {
             <a
               href={process.env.NEXT_PUBLIC_PORTFOLIO_URL}
               target="_blank"
-              className="portfolio__link"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center justify-center rounded-full px-3 py-1.5 text-[15px] font-semibold text-secondary
+                transition-[color,background,transform] duration-200 hover:z-1 hover:-translate-y-px hover:text-primary before:absolute before:inset-0 before:-z-10
+                before:rounded-full before:border before:border-border-strong before:bg-panel-soft before:opacity-0 before:transition-opacity before:duration-200
+                hover:before:opacity-100"
             >
               Portfolio
               <img
-                src="assets/redirect-icon.png"
+                src="/assets/redirect-icon.png"
                 alt="Redirect Icon"
-                className="w-3 h-3 ml-1"
+                className="ml-1 h-3.5 w-3.5 [filter:brightness(0)_saturate(100%)_invert(79%)_sepia(43%)_saturate(746%)_hue-rotate(123deg)_brightness(96%)_contrast(91%)]"
               />
             </a>
           </div>
           {chats.length === 0 ? (
-            <div className="flex flex-col items-center justify-center mt-16 slide-up px-4 md:px-2">
+            <div className="mt-16 flex flex-col items-center justify-center px-4 md:px-2">
               <div
-                className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center shadow-xl
-            border border-indigo-100 rotate-3 transform transition-transform hover:rotate-6"
+                className="flex h-20 w-20 rotate-3 transform items-center justify-center rounded-3xl border border-border bg-surface shadow-shell transition-transform
+                  hover:-rotate-5"
               >
                 <TerminalIcon />
               </div>
-              <h2 className="text-3xl font-extrabold text-primary mt-4">
+              <h2 className="mt-4 text-3xl font-extrabold text-primary">
                 {ASK_VERITAS}
               </h2>
-              <p className="w-full mt-2 mb-6 text-lg font-semibold text-primary-light">
+              <p className="mt-2 mb-6 w-full text-lg font-semibold text-secondary">
                 {INTRO_MESSAGE}
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 w-full md:gap-y-6">
+              <div className="grid w-full grid-cols-1 gap-x-8 gap-y-3 md:gap-y-6 sm:grid-cols-2">
                 {SUGGESTED_QUERIES.map((query, idx) => (
                   <button
                     key={idx}
-                    className="group flex w-full md:min-w-72 items-center justify-between px-4 py-4
-                    bg-white border border-indigo-50 rounded-xl text-left text-slate-700
-                    font-semibold shadow-sm transition-all duration-200 hover:border-indigo-300
-                    hover:shadow-md hover:text-indigo-700 cursor-pointer
-                    disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-indigo-50
-                    disabled:hover:shadow-none disabled:hover:text-slate-700"
+                    className="group flex w-full cursor-pointer items-center justify-between rounded-xl border border-border bg-surface px-4 py-4 text-left font-semibold
+                      text-text shadow-card transition-all duration-200 hover:border-border-strong hover:text-primary hover:shadow-glow disabled:cursor-not-allowed
+                      disabled:opacity-50 disabled:hover:border-border disabled:hover:shadow-card disabled:hover:text-text md:min-w-72"
                     disabled={!isActive}
                     onClick={() => handleSelectedQuery(idx)}
                   >
@@ -191,48 +187,47 @@ export const VeritasPage = () => {
           ) : (
             <Conversation chats={chats} showVeritasTyping={isLoading} />
           )}
-          <div className="w-full px-8 py-8 shadow-md fixed bottom-0 md:px-4">
-            <form
-              onSubmit={handleSubmit}
-              className="max-w-2xl mx-auto flex gap-2"
-            >
-              <input
-                id="message"
-                name="message"
-                type="text"
-                value={userMessage}
-                onChange={(e) => setUserMessage(e.target.value)}
-                placeholder={
-                  isActive
-                    ? "Ask Veritas..."
-                    : "Veritas is currently offline. Please try again later."
-                }
-                className="w-full px-4 py-2 bg-white rounded-lg border border-border focus:outline-none focus:ring-1
-                focus:ring-border text-[16px] font-medium font-nunito text-(--color-gray) placeholder:text-slate-400
-                transition-colors duration-100 ease-in-out disabled:cursor-not-allowed"
-                disabled={!isActive}
-              />
-              {isActive && (
-                <button
-                  type="submit"
-                  className={`px-4 py-3 flex items-center justify-center gap-1 bg-primary text-white rounded-lg
-                  font-mediumhover:bg-primary-light transition-colors duration-100
-                  ${isLoading ? "cursor-progress" : "cursor-pointer"}`}
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <img
-                      src="/assets/loader.svg"
-                      alt="Loader"
-                      width={30}
-                      height={30}
-                    />
-                  ) : (
-                    <SendIcon />
-                  )}
-                </button>
-              )}
-            </form>
+          <div className="fixed bottom-0 w-full px-8 py-8 md:px-4">
+            <div className="mx-auto max-w-2xl rounded-3xl border border-border bg-surface/90 p-3 shadow-shell backdrop-blur-xl">
+              <form onSubmit={handleSubmit} className="mx-auto flex gap-2">
+                <input
+                  id="message"
+                  name="message"
+                  type="text"
+                  value={userMessage}
+                  onChange={(e) => setUserMessage(e.target.value)}
+                  placeholder={
+                    isActive
+                      ? "Ask Veritas..."
+                      : "Veritas is currently offline. Please try again later."
+                  }
+                  className="w-full rounded-lg border border-border bg-panel px-4 py-2 text-[16px] font-medium text-primary placeholder:text-muted transition-colors
+                    duration-100 ease-in-out focus:border-border-strong focus:outline-none focus:ring-1 focus:ring-border-strong disabled:cursor-not-allowed"
+                  disabled={!isActive}
+                />
+                {isActive && (
+                  <button
+                    type="submit"
+                    className={`inline-flex items-center justify-center gap-1 rounded-lg border border-border-strong bg-brand px-4 py-3 font-medium text-app-bg
+                      transition-colors duration-100 hover:border-amber-400/80 hover:shadow-glow ${
+                        isLoading ? "cursor-progress" : "cursor-pointer"
+                      }`}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <img
+                        src="/assets/loader.svg"
+                        alt="Loader"
+                        width={30}
+                        height={30}
+                      />
+                    ) : (
+                      <SendIcon />
+                    )}
+                  </button>
+                )}
+              </form>
+            </div>
           </div>
         </div>
       )}
